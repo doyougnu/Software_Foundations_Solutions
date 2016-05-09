@@ -573,15 +573,16 @@ Proof. reflexivity.  Qed.
     yielding a [b]oolean.  Instead of making up a new [Fixpoint] for
     this one, define it in terms of a previously defined function. *)
 
+(*bool check that the are unequal AND n is less than m*)
 Definition blt_nat (n m : nat) : bool :=
-  (* FILL IN HERE *) admit.
-
+  (andb (negb (beq_nat n m)) (ble_nat n m)).
+  
 Example test_blt_nat1:             (blt_nat 2 2) = false.
-(* FILL IN HERE *) Admitted.
+Proof. reflexivity. Qed.
 Example test_blt_nat2:             (blt_nat 2 4) = true.
-(* FILL IN HERE *) Admitted.
+Proof. reflexivity. Qed.
 Example test_blt_nat3:             (blt_nat 4 2) = false.
-(* FILL IN HERE *) Admitted.
+Proof. reflexivity. Qed.
 
 (** [] *)
 
