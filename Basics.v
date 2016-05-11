@@ -865,26 +865,59 @@ Theorem identity_fn_applied_twice :
   (forall (x : bool), f x = x) ->
   forall (b : bool), f (f b) = b.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros f.
+  intros x.
+  intros b.
+  rewrite x.
+  rewrite x.
+  reflexivity. Qed.
 
 (** Now state and prove a theorem [negation_fn_applied_twice] similar
     to the previous one but where the second hypothesis says that the
     function [f] has the property that [f x = negb x].*)
 
-(* FILL IN HERE *)
+Theorem negation_fn_applied_twice : 
+  forall (f : bool -> bool), 
+  (forall (x : bool), f x = negb x) ->
+  forall (b : bool), f (f b) = b.
+Proof.
+  intros f.
+  intros x.
+  intros b.
+  rewrite x.
+  rewrite x.
+  rewrite negb_involutive.
+  reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (andb_eq_orb)  *)
 (** Prove the following theorem.  (You may want to first prove a
     subsidiary lemma or two. Alternatively, remember that you do
     not have to introduce all hypotheses at the same time.) *)
+Set Printing All.
+
+Theorem DeMorg :
+  forall (b c : bool),
+  (andb b c) = (negb (orb (negb b) (negb c))).
+Proof.
+  intros b c. destruct b as [true | false].
+  destruct c as [true | false].
+  reflexivity.
+  reflexivity.
+  reflexivity.
+   Qed.
 
 Theorem andb_eq_orb : 
   forall (b c : bool),
   (andb b c = orb b c) ->
   b = c.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b c.
+  destruct b.
+  simpl. intros H. rewrite H. reflexivity.
+  simpl. intros H. rewrite H. reflexivity. 
+  Qed.
+  
 (** [] *)
 
 (** **** Exercise: 3 stars (binary)  *)
@@ -923,7 +956,24 @@ Proof.
         then incrementing. 
 *)
 
-(* FILL IN HERE *)
+Inductive bin : Type :=
+  | OO : bin
+  | Twice : bin -> bin
+  | More : bin -> bin.
+  
+Fixpoint incr_b (n : bin) : bin :=
+match n with
+  | OO => More OO
+  | Twice m => More m
+  | More m => Twice (incr_b m)
+  end.
+  
+Fixpoint binn (n : bin) : nat :=
+match n with
+  | OO => O
+  | Twice m => binn m + binn m
+  | More m => S (binn m + binn m)
+  end. 
 (** [] *)
 
 (* ###################################################################### *)
