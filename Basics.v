@@ -727,8 +727,8 @@ Proof.
   intros n m o.
   intros H.
   rewrite -> H.
-  intros H.
-  rewrite H.
+  intros Hy.
+  rewrite Hy.
   reflexivity. Qed.
 (** [] *)
 
@@ -759,7 +759,10 @@ Theorem mult_S_1 : forall n m : nat,
   m = S n -> 
   m * (1 + n) = m * m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros m n.
+  intros H.
+  rewrite -> H.
+  reflexivity. Qed.
 (** [] *)
 
 
@@ -844,7 +847,9 @@ Proof.
 Theorem zero_nbeq_plus_1 : forall n : nat,
   beq_nat 0 (n + 1) = false.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. destruct n as [| n'].
+  reflexivity.
+  reflexivity. Qed.
 
 (** [] *)
 
