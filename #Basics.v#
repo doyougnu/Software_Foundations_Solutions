@@ -727,8 +727,8 @@ Proof.
   intros n m o.
   intros H.
   rewrite -> H.
-  intros H.
-  rewrite H.
+  intros Hy.
+  rewrite Hy.
   reflexivity. Qed.
 (** [] *)
 
