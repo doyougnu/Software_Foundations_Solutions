@@ -411,7 +411,7 @@ Proof.
   intros n m. induction n as [| n'].
   Case "n = 0". simpl. rewrite mult_0_r. reflexivity.
   Case "n = S n'". rewrite mult_n_Sm. simpl. rewrite IHn'.
-    reflexivity. Qed. 
+    reflexivity. Qed.
       
 (** [] *)
 
@@ -422,7 +422,13 @@ Proof.
 Theorem evenb_n__oddb_Sn : forall n : nat,
   evenb n = negb (evenb (S n)).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. induction n as [| n'].
+  Case "n = 0". simpl. reflexivity.
+  Case "n = S n'".
+    assert (evenb (S (S n')) = evenb n') as H.
+      simpl. reflexivity.
+    rewrite -> H. rewrite IHn'. rewrite negb_involutive.
+    reflexivity. Qed.
 (** [] *)
 
 (* ###################################################################### *)
