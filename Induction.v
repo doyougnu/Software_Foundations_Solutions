@@ -480,7 +480,7 @@ Proof.
 
 Theorem mult_1_l : forall n:nat, 1 * n = n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. simpl. rewrite plus_0_r. reflexivity. Qed.
 
 Theorem all3_spec : forall b c : bool,
     orb
@@ -489,7 +489,10 @@ Theorem all3_spec : forall b c : bool,
                (negb c))
   = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b c. induction b as [| b'].
+  Case "b = False". simpl. destruct c. 
+    simpl. reflexivity. simpl. reflexivity.
+  Case "b = True". simpl. reflexivity. Qed.
 
 Theorem mult_plus_distr_r : forall n m p : nat,
   (n + m) * p = (n * p) + (m * p).
