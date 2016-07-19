@@ -519,7 +519,10 @@ Proof.
 Theorem mult_assoc : forall n m p : nat,
   n * (m * p) = (n * m) * p.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p. induction n as [| n'].
+  Case "n = 0". simpl. reflexivity.
+  Case "n = S n'". simpl. rewrite mult_plus_distr_r.
+    rewrite -> IHn'. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (beq_nat_refl)  *)
