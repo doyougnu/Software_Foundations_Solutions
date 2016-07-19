@@ -715,7 +715,7 @@ Proof.
 
 (** Theorem: Addition is commutative.
  
-    Proof: (* FILL IN HERE *)
+    Proof: 
 *)
 (** [] *)
 
