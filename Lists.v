@@ -342,7 +342,7 @@ Definition bag := natlist.
     [count], [sum], [add], and [member] for bags. *)
 
 Fixpoint count (v:nat) (s:bag) : nat := 
-  (* FILL IN HERE *) admit.
+  match 
 
 (** All these proofs can be done just by [reflexivity]. *)
 
