@@ -783,11 +783,21 @@ Proof.
   reflexivity.
   simpl. rewrite -> IHl'. reflexivity. Qed.
 
+Theorem rev_id : forall (l:natlist) (n:nat),
+ n :: rev l = rev (snoc l n).
+Proof.
+  intros l n. induction l as [| n' l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite <- IHl'. simpl. reflexivity. Qed.
 
 Theorem rev_involutive : forall l : natlist,
   rev (rev l) = l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. induction l as [| n' l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite <- rev_id. 
+    rewrite IHl'. reflexivity. Qed.
+  
 
 (** There is a short solution to the next exercise.  If you find
     yourself getting tangled up, step back and try to look for a
