@@ -831,7 +831,11 @@ Proof.
 Lemma nonzeros_app : forall l1 l2 : natlist,
   nonzeros (l1 ++ l2) = (nonzeros l1) ++ (nonzeros l2).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l1 l2. induction l1 as [| n l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. destruct n as [| m].
+    SCase "m = 0". rewrite -> IHl'. reflexivity.
+    SCase "m = S m". simpl. rewrite IHl'. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (beq_natlist)  *)
