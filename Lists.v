@@ -761,7 +761,7 @@ Proof.
     involving [foo].  For example, try uncommenting the following to
     see a list of theorems that we have proved about [rev]: *)
 
-(*  SearchAbout rev. *)
+  (*SearchAbout rev.*)
 
 (** Keep [SearchAbout] in mind as you do the following exercises and
     throughout the rest of the course; it can save you a lot of time! *)
@@ -779,7 +779,9 @@ Proof.
 Theorem app_nil_end : forall l : natlist, 
   l ++ [] = l.   
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. induction l as [| n' l'].
+  reflexivity.
+  simpl. rewrite -> IHl'. reflexivity. Qed.
 
 
 Theorem rev_involutive : forall l : natlist,
