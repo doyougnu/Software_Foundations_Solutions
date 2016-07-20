@@ -813,7 +813,9 @@ Proof.
 Theorem snoc_append : forall (l:natlist) (n:nat),
   snoc l n = l ++ [n].
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l n. induction l as [| n' l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite -> IHl'. reflexivity. Qed.
 
 
 Theorem distr_rev : forall l1 l2 : natlist,
