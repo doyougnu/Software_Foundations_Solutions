@@ -896,7 +896,7 @@ Proof.
 Theorem count_member_nonzero : forall (s : bag),
   ble_nat 1 (count 1 (1 :: s)) = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros s. simpl. reflexivity. Qed.
 
 (** The following lemma about [ble_nat] might help you in the next proof. *)
 
