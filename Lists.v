@@ -934,7 +934,11 @@ Proof.
 There is a hard way and an easy way to solve this exercise.
 *)
 
-(* FILL IN HERE *)
+Theorem rev_injective : forall l1 l2 : natlist,
+  rev l1 = rev l2 -> l1 = l2.
+Proof.
+  intros l1 l2 H. rewrite <- rev_involutive. rewrite <- H.
+  rewrite -> rev_involutive. reflexivity. Qed.
 (** [] *)
 
 
@@ -1018,16 +1022,19 @@ Definition option_elim (d : nat) (o : natoption) : nat :=
    have to pass a default element for the [nil] case.  *)
 
 Definition hd_opt (l : natlist) : natoption :=
-  (* FILL IN HERE *) admit.
+  match l with
+  | nil => None
+  | h :: t => Some h
+end.
 
 Example test_hd_opt1 : hd_opt [] = None.
- (* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 
 Example test_hd_opt2 : hd_opt [1] = Some 1.
- (* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 
 Example test_hd_opt3 : hd_opt [5;6] = Some 5.
- (* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 1 star, optional (option_elim_hd)  *)
@@ -1036,7 +1043,8 @@ Example test_hd_opt3 : hd_opt [5;6] = Some 5.
 Theorem option_elim_hd : forall (l:natlist) (default:nat),
   hd default l = option_elim default (hd_opt l).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l default. destruct l. simpl. reflexivity. 
+  simpl. reflexivity. Qed.
 (** [] *)
 
 (* ###################################################### *)
