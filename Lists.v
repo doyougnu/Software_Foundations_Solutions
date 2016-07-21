@@ -844,12 +844,14 @@ Proof.
     yields [true] for every list [l]. *)
 
 Fixpoint beq_natlist (l1 l2 : natlist) : bool :=
-  match l1 with
-  | nil => true
-  | h1 :: t1 => match member h1 l2 with
-                | true => beq_natlist t1 (remove_one h1 l2)
-                | false => false
-                end
+  match l1, l2 with
+  | nil, nil => true
+  | nil, _ => false
+  | _, nil => false
+  | h1 :: t1, h2 :: t2 => match beq_nat h1 h2 with
+                          | true => beq_natlist t1 t2
+                          | false => false
+                          end
 end.
 
 Example test_beq_natlist1 :   (beq_natlist nil nil = true).
@@ -859,10 +861,20 @@ Proof. reflexivity. Qed.
 Example test_beq_natlist3 :   beq_natlist [1;2;3] [1;2;4] = false.
 Proof. reflexivity. Qed.
 
+Theorem beq_nat_refl : forall n : nat,
+  true = beq_nat n n.
+Proof.
+  intros n. induction n as [| n'].
+  Case "n = 0". simpl. reflexivity.
+  Case "n = S n'". simpl. rewrite IHn'. reflexivity. Qed. 
+
 Theorem beq_natlist_refl : forall l:natlist,
   true = beq_natlist l l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. induction l as [| n l'].
+  Case "l = nil". reflexivity.
+  Case "l = cons". simpl. rewrite <- beq_nat_refl. apply IHl'.
+  Qed.
 (** [] *)
 
 (* ###################################################### *)
