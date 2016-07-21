@@ -912,7 +912,11 @@ Proof.
 Theorem remove_decreases_count: forall (s : bag),
   ble_nat (count 0 (remove_one 0 s)) (count 0 s) = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros s. induction s as [|n s'].
+  Case "s = []". simpl. reflexivity.
+  Case "s = s' :: s". destruct n as [| n']. 
+    SCase "n = 0". rewrite -> ble_n_Sn. reflexivity.
+    SCase "n = S n'". simpl. rewrite IHs'. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (bag_count_sum)  *)  
