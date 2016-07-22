@@ -1092,7 +1092,10 @@ Proof. reflexivity. Qed.
 
 Theorem fold_length_correct : forall X (l : list X),
   fold_length l = length l.
-(* FILL IN HERE *) Admitted.
+Proof. intros X l. induction l as [| l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite <- IHl. unfold fold_length. simpl.
+  reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (fold_map)  *)
@@ -1100,12 +1103,17 @@ Theorem fold_length_correct : forall X (l : list X),
     below. *)
 
 Definition fold_map {X Y:Type} (f : X -> Y) (l : list X) : list Y :=
-(* FILL IN HERE *) admit.
+  fold (fun a b => (f a) :: b) l [].
 
 (** Write down a theorem [fold_map_correct] in Coq stating that
    [fold_map] is correct, and prove it. *)
 
-(* FILL IN HERE *)
+Theorem fold_map_correct : forall {X Y : Type} (f : X -> Y) (l:list X), 
+ fold_map f l = map f l.
+Proof. intros X Y f l. induction l as [| l'].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite <- IHl. reflexivity.
+  Qed. 
 (** [] *)
 
 (** **** Exercise: 2 stars, advanced (index_informal)  *)
@@ -1117,7 +1125,7 @@ Definition fold_map {X Y:Type} (f : X -> Y) (l : list X) : list Y :=
      end.
    Write an informal proof of the following theorem:
    forall X n l, length l = n -> @index X n l = None.
-(* FILL IN HERE *)
+(* SKIP *)
 *)
 (** [] *)
 
@@ -1164,7 +1172,6 @@ Definition three : nat := @doit3times.
 (** Successor of a natural number *)
 
 Definition succ (n : nat) : nat :=
-  (* FILL IN HERE *) admit.
 
 Example succ_1 : succ zero = one.
 Proof. (* FILL IN HERE *) Admitted.
