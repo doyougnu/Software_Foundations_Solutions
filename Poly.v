@@ -934,7 +934,9 @@ Proof. reflexivity. Qed.
     that takes an [X] and a [Y] and returns a [Y].  Can you think of a
     situation where it would be useful for [X] and [Y] to be
     different? *)
-
+  (** ???? X and Y are different. They are different types. A situation
+   where X and Y being different would be useful is in a fold function
+   ????**)
 (* ###################################################### *)
 (** ** Functions For Constructing Functions *)
 
@@ -998,7 +1000,7 @@ Proof. reflexivity. Qed.
 Theorem override_example : forall (b:bool),
   (override (constfun b) 3 true) 2 = b.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b. destruct b. reflexivity. reflexivity. Qed.
 (** [] *)
 
 (** We'll use function overriding heavily in parts of the rest of the
@@ -1065,7 +1067,8 @@ Theorem override_neq : forall (X:Type) x1 x2 k1 k2 (f : nat->X),
   beq_nat k2 k1 = false ->
   (override f k2 x2) k1 = x1.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X x1 x2 k1 k2 f H1 H2. unfold override. rewrite -> H2.
+  rewrite -> H1. reflexivity. Qed.
 (** [] *)
 
 (** As the inverse of [unfold], Coq also provides a tactic
