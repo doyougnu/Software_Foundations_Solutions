@@ -1171,7 +1171,7 @@ Definition three : nat := @doit3times.
 
 (** Successor of a natural number *)
 
-Definition succ (n : nat) : nat :=
+(*Definition succ (n : nat) : nat := Proof. Admitted.
 
 Example succ_1 : succ zero = one.
 Proof. (* FILL IN HERE *) Admitted.
@@ -1230,9 +1230,9 @@ Proof. (* FILL IN HERE *) Admitted.
 Example exp_3 : exp three zero = one.
 Proof. (* FILL IN HERE *) Admitted.
 
+*)
 End Church.
 
 (** [] *)
 
 (** $Date: 2014-12-31 11:17:56 -0500 (Wed, 31 Dec 2014) $ *)
-
