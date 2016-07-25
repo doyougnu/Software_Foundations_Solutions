@@ -388,9 +388,11 @@ Theorem plus_n_n_injective : forall n m,
      n + n = m + m ->
      n = m.
 Proof.
-  intros n. induction n as [| n'].
+  intros n. induction n as [| n']. 
+  Case "n = 0". intros m H. destruct m. reflexivity. inversion H.
+  Case "n = S n'".
     (* Hint: use the plus_n_Sm lemma *)
-    (* FILL IN HERE *) Admitted.
+  
 (** [] *)
 
 (* ###################################################### *)
