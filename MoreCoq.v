@@ -297,7 +297,7 @@ Example sillyex2 : forall (X : Type) (x y z : X) (l j : list X),
      y :: l = z :: j ->
      x = z.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X x y z l j eq eq2. inversion eq. Qed.
 (** [] *)
 
 (** While the injectivity of constructors allows us to reason
@@ -320,12 +320,12 @@ Proof. intros A B f x y eq. rewrite eq.  reflexivity.  Qed.
 Theorem beq_nat_0_l : forall n,
    beq_nat 0 n = true -> n = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n eq. destruct n. reflexivity. inversion eq. Qed.
 
 Theorem beq_nat_0_r : forall n,
    beq_nat n 0 = true -> n = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n eq. destruct n. reflexivity. inversion eq. Qed.
 (** [] *)
 
 
