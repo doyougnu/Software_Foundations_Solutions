@@ -554,7 +554,7 @@ Proof.
 (** Give a careful informal proof of [beq_nat_true], being as explicit
     as possible about quantifiers. *)
 
-(* FILL IN HERE *)
+(* Skip *)
 (** [] *)
 
 
@@ -720,7 +720,14 @@ Theorem index_after_last: forall (n : nat) (X : Type) (l : list X),
      length l = n ->
      index n l = None.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n X l. generalize dependent n. induction l as [| l']. 
+
+  Case "l = []". simpl. reflexivity.
+
+  Case "l' :: l". intros n. destruct n as [| n'].
+  SCase "n = 0". simpl. intros eq. inversion eq.
+  SCase "n = S n'". intros eq. simpl. apply IHl. inversion eq.
+  reflexivity. Qed. 
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced, optional (index_after_last_informal)  *)
