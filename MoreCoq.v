@@ -1082,14 +1082,20 @@ Proof.
     and [l2] for [split] [combine l1 l2 = (l1,l2)] to be true?)  *)
 
 Definition split_combine_statement : Prop :=
-(* FILL IN HERE *) admit.
+  forall (X : Type) (l1 l2 : list X),
+  (length l1 = length l2) -> split (combine l1 l2) = (l1, l2).
+
 
 Theorem split_combine : split_combine_statement.
 Proof.
-(* FILL IN HERE *) Admitted.
-
-
-
+  intros X l1. induction l1 as [| l1'].
+  Case "l1 = []". intros l2 H. destruct l2 as [| y l2'].
+    SCase "l2 = []". simpl. reflexivity.
+    SCase "l2 = y :: l2'". simpl. inversion H.
+  Case "l1 = l1' :: l1". intros l2 H. destruct l2 as [| y l2'].
+    SCase "l2 = []". simpl. inversion H.
+    SCase "l2 = y :: l2'". simpl. rewrite -> IHl1. simpl. reflexivity.
+      inversion H. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (override_permute)  *)
@@ -1097,7 +1103,10 @@ Theorem override_permute : forall (X:Type) x1 x2 k1 k2 k3 (f : nat->X),
   beq_nat k2 k1 = false ->
   (override (override f k2 x2) k1 x1) k3 = (override (override f k1 x1) k2 x2) k3.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X x1 x2 k1 k2 k3 eq H. unfold override. destruct (beq_nat k1 k3) eqn:H2.
+  Case "beq_nat k1 k3 = true". apply beq_nat_true in H2. rewrite <- H2.
+    rewrite H. reflexivity.
+  Case "beq_nat k1 k3 = false". reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced (filter_exercise)  *)
@@ -1108,7 +1117,6 @@ Theorem filter_exercise : forall (X : Type) (test : X -> bool)
      filter test l = x :: lf ->
      test x = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (forall_exists_challenge)  *)
