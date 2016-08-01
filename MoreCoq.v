@@ -849,7 +849,9 @@ Proof.
 Theorem override_shadow : forall (X:Type) x1 x2 k1 k2 (f : nat->X),
   (override (override f k1 x2) k1 x1) k2 = (override f k1 x1) k2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros x1 x2 k1 k2 f f1. unfold override. destruct (beq_nat k2 f).
+  reflexivity.
+  reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (combine_split)  *)
@@ -859,7 +861,11 @@ Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
   split l = (l1, l2) ->
   combine l1 l2 = l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X Y l. induction l as [| [x y] l'].
+  Case "l = []". intros l1 l2 H. inversion H. reflexivity. 
+  Case "l = cons". simpl. destruct (split l') as [l1' l2'].
+  intros l1 l2 eq. inversion eq. simpl. apply f_equal. apply IHl'.
+  reflexivity. Qed.
 (** [] *)
 
 (** Sometimes, doing a [destruct] on a compound expression (a
@@ -928,7 +934,17 @@ Theorem bool_fn_applied_thrice :
   forall (f : bool -> bool) (b : bool), 
   f (f (f b)) = f b.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros f b. destruct b.
+  Case "b = true". destruct (f true) eqn:fTrue.
+    SCase "f true = true". rewrite fTrue. apply fTrue.
+    SCase "f true = false". destruct (f false) eqn:fFalse.
+      SSCase "f false = true". apply fTrue.
+      SSCase "f false = false". apply fFalse.
+  Case "b = false". destruct (f false) eqn:fFalse2.
+    SCase "f false = true". destruct (f true) eqn:fTrue2.
+      SSCase "f true = true". apply fTrue2.
+      SSCase "f false = true". apply fFalse2.
+    SCase "f false = false". rewrite fFalse2. apply fFalse2. Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (override_same)  *)
@@ -936,7 +952,10 @@ Theorem override_same : forall (X:Type) x1 k1 k2 (f : nat->X),
   f k1 = x1 -> 
   (override f k1 x1) k2 = f k2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X x1 k1 k2 f H. unfold override. destruct (beq_nat k1 k2) eqn:H2.
+  Case "beq_nat k1 k2 = true". apply beq_nat_true in H2. rewrite <- H2.
+    apply H.
+  Case "beq_nat k1 k2 = false". reflexivity. Qed.
 (** [] *)
 
 (* ################################################################## *)
