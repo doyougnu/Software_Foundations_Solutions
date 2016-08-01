@@ -1040,7 +1040,13 @@ Proof.
 Theorem beq_nat_sym : forall (n m : nat),
   beq_nat n m = beq_nat m n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. induction n as [| n'].
+  Case "n = 0". intros m. destruct m as [| m'].
+    SCase "m = 0". reflexivity.
+    SCase "m = S m'". simpl. reflexivity. 
+  Case "n = S n'". intros m. destruct m as [| m'].
+    SCase "m = 0". simpl. reflexivity.
+    SCase "m = S n'". simpl. apply IHn'. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced, optional (beq_nat_sym_informal)  *)
@@ -1050,7 +1056,7 @@ Proof.
    Theorem: For any [nat]s [n] [m], [beq_nat n m = beq_nat m n].
 
    Proof:
-   (* FILL IN HERE *)
+   (* SKIP *)
 []
  *)
 
@@ -1060,7 +1066,7 @@ Theorem beq_nat_trans : forall n m p,
   beq_nat m p = true ->
   beq_nat n p = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p H H2. apply beq_nat_true in H. rewrite H. apply H2. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced (split_combine)  *)
