@@ -1117,6 +1117,11 @@ Theorem filter_exercise : forall (X : Type) (test : X -> bool)
      filter test l = x :: lf ->
      test x = true.
 Proof.
+  intros X f x l lf. induction l as [| l'].
+  Case "l = []". intros eq. inversion eq.
+  Case "l = cons". simpl. destruct (f l') eqn:H.
+    SCase "f l' = true". intros eq. inversion eq. rewrite <- H1. apply H.
+    SCase "f l' = false". intros eq. apply IHl. apply eq. Qed.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (forall_exists_challenge)  *)
