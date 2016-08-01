@@ -954,7 +954,7 @@ Theorem override_same : forall (X:Type) x1 k1 k2 (f : nat->X),
 Proof.
   intros X x1 k1 k2 f H. unfold override. destruct (beq_nat k1 k2) eqn:H2.
   Case "beq_nat k1 k2 = true". apply beq_nat_true in H2. rewrite <- H2.
-    apply H.
+    symmetry in  H. apply H.
   Case "beq_nat k1 k2 = false". reflexivity. Qed.
 (** [] *)
 
@@ -1155,6 +1155,3 @@ Proof.
 (** [] *)
 
 (** $Date: 2014-12-31 16:01:37 -0500 (Wed, 31 Dec 2014) $ *)
-
-
-
