@@ -447,7 +447,7 @@ Proof.
    _Theorem_: [P] implies [~~P], for any proposition [P].
 
    _Proof_:
-(* FILL IN HERE *)
+(* Skip *)
    []
 *)
 
@@ -455,7 +455,8 @@ Proof.
 Theorem contrapositive : forall P Q : Prop,
   (P -> Q) -> (~Q -> ~P).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P Q Hp Hq. unfold not. intros eq. destruct Hq.  apply Hp.  apply eq.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 1 star (not_both_true_and_false)  *)
