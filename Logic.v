@@ -339,7 +339,7 @@ Proof.
 Theorem or_commut : forall P Q : Prop,
   P \/ Q  -> Q \/ P.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P Q [Hp | Hq]. right. apply Hp. left. apply Hq. Qed.
 (** [] *)
 
 (* ================================================================= *)
@@ -394,7 +394,7 @@ Proof.
 Fact not_implies_our_not : forall (P:Prop),
   ~ P -> (forall (Q:Prop), P -> Q).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P H1 p1 H2. destruct H1. apply H2. Qed.
 (** [] *)
 
 (** This is how we use [not] to state that [0] and [1] are different
