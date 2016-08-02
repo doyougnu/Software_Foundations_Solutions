@@ -584,7 +584,14 @@ Proof.
 Theorem or_distributes_over_and : forall P Q R : Prop,
   P \/ (Q /\ R) <-> (P \/ Q) /\ (P \/ R).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P Q R. split.
+  - (* -> *) intros H. split. inversion H. left. apply H0.
+             inversion H0. right. apply H1. inversion H. left. apply H0.
+             inversion H0. right. apply H2.
+  - (* <- *) intros H. destruct H. destruct H. left. apply H. destruct H0.
+             left. apply H0. right. split. apply H. apply H0. Qed. 
+
+              
 (** [] *)
 
 (** Some of Coq's tactics treat [iff] statements specially, avoiding
