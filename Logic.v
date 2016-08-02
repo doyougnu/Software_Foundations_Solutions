@@ -568,12 +568,16 @@ Qed.
 Theorem iff_refl : forall P : Prop,
   P <-> P.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P.  split.
+  - (* -> *) intros Hp. apply Hp.
+  - (* <- *) intros Hp. apply Hp. Qed.
 
 Theorem iff_trans : forall P Q R : Prop,
   (P <-> Q) -> (Q <-> R) -> (P <-> R).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P Q R [Hp Hq Hr]. split.
+  - (* -> *) intros Hpp. apply Hr. apply Hp. apply Hpp.
+  - (* <- *) intros Hpp. apply Hq. apply Hr. apply Hpp. Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (or_distributes_over_and)  *)
