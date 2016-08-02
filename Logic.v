@@ -463,14 +463,14 @@ Proof.
 Theorem not_both_true_and_false : forall P : Prop,
   ~ (P /\ ~P).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros P Hp. inversion Hp. destruct H0. apply H. Qed.
 (** [] *)
 
 (** **** Exercise: 1 star, advanced (informal_not_PNP)  *)
 (** Write an informal proof (in English) of the proposition [forall P
     : Prop, ~(P /\ ~P)]. *)
 
-(* FILL IN HERE *)
+(* Skip *)
 (** [] *)
 
 (** Similarly, since inequality involves a negation, it requires a
