@@ -1,6 +1,7 @@
 (** * Logic: Logic in Coq *)
 
 Require Export Tactics.
+Require Export Induction.
 
 (** In previous chapters, we have seen many examples of factual
     claims (_propositions_) and ways of presenting evidence of their
@@ -148,7 +149,10 @@ Qed.
 Example and_exercise :
   forall n m : nat, n + m = 0 -> n = 0 /\ m = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m HA. split.
+  - induction n as [| n']. reflexivity. inversion HA.
+  - induction m as [| m']. reflexivity. rewrite plus_comm in HA. inversion HA.
+    Qed.
 (** [] *)
 
 (** So much for proving conjunctive statements.  To go in the other
