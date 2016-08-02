@@ -325,7 +325,14 @@ Qed.
 Lemma mult_eq_0 :
   forall n m, n * m = 0 -> n = 0 \/ m = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m H. induction n as [| n].
+  Case "n = 0". destruct m.
+    SCase "m = 0". left. reflexivity.
+    SCase "m = S m". left.  reflexivity.
+  Case "n = S m". destruct m.
+    SCase "m = 0". right. reflexivity.
+    SCase "m = S m". inversion H. Qed.
+  
 (** [] *)
 
 (** **** Exercise: 1 star (or_commut)  *)
