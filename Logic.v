@@ -2,6 +2,7 @@
 
 Require Export Tactics.
 Require Export Induction.
+Require Export List.
 
 (** In previous chapters, we have seen many examples of factual
     claims (_propositions_) and ways of presenting evidence of their
@@ -728,12 +729,16 @@ Proof.
 (** We can translate this directly into a straightforward Coq
     function, [In].  (It can also be found in the Coq standard
     library.) *)
+Notation "x :: l" := (cons x l) (at level 60, right associativity).
+Notation "[ ]" := nil.
+Notation "[ x ; .. ; y ]" := (cons x .. (cons y nil) ..).
 
 Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
   match l with
-  | [] => False
+  | nil => False
   | x' :: l' => x' = x \/ In x l'
   end.
+
 
 (** When [In] is applied to a concrete list, it expands into a
     concrete sequence of nested conjunctions. *)
@@ -789,14 +794,24 @@ Lemma In_map_iff :
     In y (map f l) <->
     exists x, f x = y /\ In x l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  induction l; firstorder (subst;auto). Qed.
+    
 (** [] *)
 
 (** **** Exercise: 2 stars (in_app_iff)  *)
 Lemma in_app_iff : forall A l l' (a:A),
   In a (l++l') <-> In a l \/ In a l'.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros A l l' a. induction l as [| x].
+  Case "l = []". simpl. split. intros H. right. apply H.
+    intros [[] | H]. apply H.
+    Case "l = cons". simpl. split.
+    (* -> *) intros [[] | H]. left. left. reflexivity.
+    apply or_assoc. right. apply IHl. apply H.
+    (* <- *) intros [[] | H]. intros H1. left. apply H1. intros H. right.
+      apply IHl. left. apply H. right. apply IHl. right. apply H.
+      Qed.
+  
 (** [] *)
 
 (** **** Exercise: 3 stars (All)  *)
