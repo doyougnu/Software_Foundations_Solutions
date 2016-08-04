@@ -826,14 +826,28 @@ Proof.
     restate the left-hand side of [All_In].) *)
 
 Fixpoint All {T} (P : T -> Prop) (l : list T) : Prop :=
-  (* FILL IN HERE *) admit.
+  match l with
+    | nil => True
+    | h :: t => P h /\ All P t
+    end.
+      
 
-Lemma All_In :
+Theorem All_In :
   forall T (P : T -> Prop) (l : list T),
     (forall x, In x l -> P x) <->
     All P l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros T P l. induction l as [| l'].
+  Case "l = []". simpl. split.
+  (* -> *) intros H. reflexivity.
+  (* <- *) intros t T1 f.  destruct f.
+  Case "l = cons". simpl. split.
+  (* -> *) intros H. inversion IHl. split. apply H. left. reflexivity. apply H0.
+    intros x H2. apply H. right. apply H2.
+  (* <- *) intros H x H1. inversion H1. rewrite <- H0. inversion H. apply H2.
+    apply IHl. inversion H. apply H3. apply H0. Qed.
+
+
 (** [] *)
 
 (** **** Exercise: 3 stars (combine_odd_even)  *)
