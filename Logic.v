@@ -1118,7 +1118,11 @@ Definition tr_rev {X} (l : list X) : list X :=
 
 
 Lemma tr_rev_correct : forall X, @tr_rev X = @rev X.
-(* FILL IN HERE *) Admitted.
+  intros X. apply functional_extensionality. intros x. unfold tr_rev.
+  induction x as [| l].
+  Case "l = []". simpl. reflexivity.
+  Case "l = cons". simpl. rewrite <- IHx. 
+  (* skipping *) Admitted.
 (** [] *)
 
 (* ================================================================= *)
@@ -1149,7 +1153,8 @@ Theorem evenb_double_conv : forall n,
                 else S (double k).
 Proof.
   (* Hint: Use the [evenb_S] lemma from [Induction.v]. *)
-  (* FILL IN HERE *) Admitted.
+  intros n. destruct n. simpl. exists (0). reflexivity.
+  rewrite -> evenb_n__oddb_Sn. simpl. 
 (** [] *)
 
 Theorem even_bool_prop : forall n,
