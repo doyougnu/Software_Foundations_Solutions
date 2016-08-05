@@ -858,7 +858,9 @@ Proof.
     otherwise. *)
 
 Definition combine_odd_even (Podd Peven : nat -> Prop) : nat -> Prop :=
-  (* FILL IN HERE *) admit.
+  fun x => if (oddb x) then Podd x else Peven x.
+
+                             
 
 (** To test your definition, prove the following facts: *)
 
@@ -868,7 +870,12 @@ Theorem combine_odd_even_intro :
     (oddb n = false -> Peven n) ->
     combine_odd_even Podd Peven n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros Po Pe n Ho He. unfold combine_odd_even. induction n as [| n'].
+  Case "n = 0". simpl. apply He. reflexivity.
+  Case "n = S n'". destruct oddb.
+    SCase "true". apply Ho. reflexivity.
+    SCase "false". apply He. reflexivity.
+    Qed.
 
 Theorem combine_odd_even_elim_odd :
   forall (Podd Peven : nat -> Prop) (n : nat),
@@ -876,7 +883,8 @@ Theorem combine_odd_even_elim_odd :
     oddb n = true ->
     Podd n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros Po Pe n H Ho. unfold combine_odd_even in H. rewrite Ho in H. apply H.
+  Qed.
 
 Theorem combine_odd_even_elim_even :
   forall (Podd Peven : nat -> Prop) (n : nat),
@@ -884,7 +892,8 @@ Theorem combine_odd_even_elim_even :
     oddb n = false ->
     Peven n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros Po Pe n H Ho. unfold combine_odd_even in H. rewrite Ho in H. apply H.
+  Qed.
 (** [] *)
 
 (* ################################################################# *)
