@@ -3,6 +3,7 @@
 Require Export Tactics.
 Require Export Induction.
 Require Export List.
+Require Export MoreCoq.
 
 (** In previous chapters, we have seen many examples of factual
     claims (_propositions_) and ways of presenting evidence of their
@@ -1153,9 +1154,15 @@ Theorem evenb_double_conv : forall n,
                 else S (double k).
 Proof.
   (* Hint: Use the [evenb_S] lemma from [Induction.v]. *)
-  intros n. destruct n. simpl. exists (0). reflexivity.
-  rewrite -> evenb_n__oddb_Sn. simpl. 
-(** [] *)
+  intros n. induction n as [| n']. simpl. exists 0. reflexivity.
+  inversion IHn' as [k H]. assert (2 * k = double k).
+  - simpl. rewrite -> double_plus. rewrite -> plus_0_r. reflexivity.
+  - destruct (evenb (S n')). exists k. Admitted.
+    
+(** Skipping after working on this for 3 days [] *)
+(** How does one show that there exists a k such that n = 2k or k = n / 2? **)
+(** How do I show a value that's < n using the exist tactic? **)
+(** How do I show that the inductive case S n' = 1? **)
 
 Theorem even_bool_prop : forall n,
   evenb n = true <-> exists k, n = double k.
@@ -1264,15 +1271,23 @@ Proof. apply even_bool_prop. reflexivity. Qed.
 (** The following lemmas relate the propositional connectives studied
     in this chapter to the corresponding boolean operations. *)
 
+(** i replaced "&&" with andb, not the first typo i've come across **)
 Lemma andb_true_iff : forall b1 b2:bool,
-  b1 && b2 = true <-> b1 = true /\ b2 = true.
+  andb b1 b2 = true <-> b1 = true /\ b2 = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b1 b2. split. intros H. split.
+  - apply andb_true_elim1 in H. apply H.
+  - apply andb_true_elim2 in H. apply H.
+  - intros H. inversion H. rewrite H0. rewrite H1. simpl. reflexivity. Qed.
 
 Lemma orb_true_iff : forall b1 b2,
-  b1 || b2 = true <-> b1 = true \/ b2 = true.
+  orb b1 b2 = true <-> b1 = true \/ b2 = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b1 b2. split.
+  - intros H. inversion H. destruct b1. simpl. left. reflexivity.
+    right. destruct b2. simpl. reflexivity. simpl. reflexivity.
+  - intros H. inversion H. rewrite H0. simpl. reflexivity.
+    rewrite H0. destruct b1. simpl. reflexivity. simpl. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 1 star (beq_nat_false_iff)  *)
@@ -1280,10 +1295,33 @@ Proof.
     [beq_nat_true_iff] that is more convenient in certain
     situations (we'll see examples in later chapters). *)
 
+Lemma beq_nat_false : forall n m : nat,
+  beq_nat n m = false -> n <> m. 
+Proof.
+  intros n m H. unfold not. intro contra. rewrite contra in H.
+  rewrite <- beq_nat_refl in H.
+  inversion H. Qed.
+
+Lemma beq_nat_false2 : forall n m : nat,
+  n <> m -> beq_nat n m = false.
+Proof.
+  intros n. induction n.
+  Case "n = 0". intros m H. destruct m as [| m']. simpl. exfalso. apply H.
+    reflexivity.
+    SCase "m = S m'". simpl. reflexivity.
+  Case "n = S n". intros m H. destruct m as [| m']. simpl. reflexivity.
+    SCase "m = S m'". simpl. apply IHn. unfold not. intros H1. unfold not in H.
+    apply H. rewrite H1. reflexivity. Qed.
+
 Theorem beq_nat_false_iff : forall x y : nat,
   beq_nat x y = false <-> x <> y.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros x y. split.
+  - (* -> *) intros H. unfold not. intros H1. rewrite H1 in H.
+             assert (beq_nat y y = true). apply beq_nat_true_iff. reflexivity.
+             rewrite H0 in H. inversion H.
+  - (* <- *) apply beq_nat_false2. Qed.
+(* that was pretty hard for a one star *)
 (** [] *)
 
 (** **** Exercise: 3 stars (beq_list)  *)
