@@ -1333,14 +1333,37 @@ Proof.
 
 Fixpoint beq_list {A} (beq : A -> A -> bool)
                   (l1 l2 : list A) : bool :=
-  (* FILL IN HERE *) admit.
+  match l1 with
+    | [] => match l2 with
+              | [] => true
+              | _ => false
+            end
+    | h1 :: t1 => match l2 with
+                    | [] => false
+                    | h2 :: t2 => match beq h1 h2 with
+                                    | false => false
+                                    | true => beq_list beq t1 t2
+                                  end
+                  end
+end.
 
 Lemma beq_list_true_iff :
   forall A (beq : A -> A -> bool),
     (forall a1 a2, beq a1 a2 = true <-> a1 = a2) ->
     forall l1 l2, beq_list beq l1 l2 = true <-> l1 = l2.
 Proof.
-(* FILL IN HERE *) Admitted.
+  intros A beq H l1 l2. split. 
+  - (* -> *) induction l1 as [| l1' l1]. intros eq.
+             Case "l1 = []". induction l2 as [| l2' l2].
+               SCase "l2 = []". reflexivity.
+               SCase "l2 = cons". unfold beq_list in eq. inversion eq.
+             Case "l1 = cons". induction l2 as [| l2' l2].
+               SCase "l2 = []". intros eq. unfold beq_list in eq. inversion eq.
+               SCase "l2 = cons". intros eq. Admitted.
+
+(* This section is a difficulty spike *)
+
+
 (** [] *)
 
 (** **** Exercise: 2 stars, recommended (All_forallb)  *)
@@ -1359,7 +1382,10 @@ Fixpoint forallb {X : Type} (test : X -> bool) (l : list X) : bool :=
 Theorem forallb_true_iff : forall X test (l : list X),
    forallb test l = true <-> All (fun x => test x = true) l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X test l. split. Admitted.
+  (* skipping hte rest of the Logic section. thinking of moving to previous
+  editions because this section was clearly made for a class to go through *)
+
 
 (** Are there any important properties of the function [forallb] which
     are not captured by your specification? *)
